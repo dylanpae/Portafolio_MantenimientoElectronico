@@ -1,225 +1,572 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Mantenimiento Eléctrico y Electrónico</title>
-    <style>
-        /* Estilos Minimalistas */
-        :root {
-            --bg-color: #f7f9fc;
-            --text-color: #2d3748;
-            --text-muted: #718096;
-            --card-bg: #ffffff;
-            --accent-color: #3182ce;
-            --accent-hover: #2b6cb0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio · Mantenimiento Eléctrico y Electrónico</title>
+<meta name="description" content="Portafolio digital de trabajos autónomos sobre mantenimiento eléctrico y electrónico: diagnóstico, instrumentación y reparación de placas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a1220;
+    --bg-alt:#0d1a30;
+    --surface:#101c33;
+    --surface-line:#1e2f4d;
+    --trace:#3be08a;       /* verde fósforo de osciloscopio */
+    --trace-dim:#3be08a55;
+    --amber:#ffb020;       /* ámbar de multímetro / advertencia */
+    --amber-dim:#ffb02040;
+    --text:#e8eefb;
+    --text-muted:#8fa0bd;
+    --danger:#ff6b6b;
+    --radius:14px;
+    --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+    --sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
 
-        header {
-            text-align: center;
-            padding: 4rem 2rem 2rem;
-        }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, #12213f 0%, transparent 45%),
+      radial-gradient(circle at 85% 10%, #0f2438 0%, transparent 40%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, #ffffff06 39px, #ffffff06 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, #ffffff06 39px, #ffffff06 40px),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-        }
+  a{color:inherit;}
 
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
-        }
+  /* ---------- Barra superior tipo silkscreen ---------- */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 28px;
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.08em;
+    color:var(--text-muted);
+    border-bottom:1px solid var(--surface-line);
+  }
+  .topbar .dot{
+    display:inline-block;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--trace);
+    margin-right:8px;
+    box-shadow:0 0 8px var(--trace);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
+  /* ---------- Hero ---------- */
+  header.hero{
+    max-width:1100px;
+    margin:0 auto;
+    padding:clamp(2.5rem,6vw,5rem) 1.5rem 2rem;
+    text-align:center;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--amber);
+  }
+  header.hero h1{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:clamp(2.1rem,5.4vw,3.4rem);
+    letter-spacing:-0.01em;
+    margin:.6rem 0 .8rem;
+  }
+  header.hero p.sub{
+    color:var(--text-muted);
+    font-size:1.05rem;
+    max-width:560px;
+    margin:0 auto;
+  }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid #e2e8f0;
-        }
+  .scope{
+    max-width:820px;
+    margin:2.6rem auto 0;
+    padding:0 1rem;
+  }
+  .scope-screen{
+    background:linear-gradient(180deg,#0c1730,#091120);
+    border:1px solid var(--surface-line);
+    border-radius:10px;
+    padding:18px 10px 8px;
+    box-shadow:inset 0 0 40px #00000080, 0 20px 40px -20px #000c;
+    position:relative;
+    overflow:hidden;
+  }
+  .scope-screen::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 23px, #ffffff08 23px 24px),
+      repeating-linear-gradient(90deg, transparent 0 40px, #ffffff08 40px 41px);
+    pointer-events:none;
+  }
+  .scope-readout{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:.68rem;
+    color:var(--trace);
+    letter-spacing:.06em;
+    padding:0 10px 6px;
+    position:relative;
+    z-index:1;
+  }
+  .scope-readout .amber{color:var(--amber);}
+  svg.trace{display:block; width:100%; height:auto; position:relative; z-index:1;}
+  .trace-line{
+    fill:none;
+    stroke:var(--trace);
+    stroke-width:2.4;
+    stroke-linecap:round;
+    filter:drop-shadow(0 0 6px var(--trace-dim));
+    stroke-dasharray:100;
+    stroke-dashoffset:100;
+    animation:draw 3.6s ease-in-out infinite;
+  }
+  .trace-line.ghost{
+    stroke:var(--amber);
+    opacity:.35;
+    stroke-width:1.6;
+    filter:none;
+    animation-delay:-1.8s;
+  }
+  @keyframes draw{
+    0%{stroke-dashoffset:100;}
+    45%{stroke-dashoffset:0;}
+    55%{stroke-dashoffset:0;}
+    100%{stroke-dashoffset:-100;}
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.35;}
+  }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.03);
-        }
+  /* ---------- Sección catálogo ---------- */
+  main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:1rem 1.5rem 5rem;
+  }
+  .section-label{
+    font-family:var(--mono);
+    font-size:.75rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:3rem 0 1.6rem;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--surface-line);
+  }
 
-        .card h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:1.4rem;
+  }
 
-        .card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
+  .card{
+    position:relative;
+    background:linear-gradient(180deg, var(--surface), var(--bg-alt));
+    border:1px solid var(--surface-line);
+    border-radius:var(--radius);
+    padding:1.7rem 1.5rem 1.5rem;
+    opacity:0;
+    transform:translateY(18px);
+    transition:transform .5s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .card.in-view{
+    opacity:1;
+    transform:translateY(0);
+    transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{
+    border-color:var(--trace-dim);
+    box-shadow:0 18px 34px -20px #000a, 0 0 0 1px var(--trace-dim);
+  }
+  .pin{
+    position:absolute;
+    width:9px; height:9px;
+    background:var(--surface-line);
+    border:1px solid #34507a;
+  }
+  .card:hover .pin{background:var(--trace); border-color:var(--trace);}
+  .pin.tl{top:-5px; left:14px;}
+  .pin.tr{top:-5px; right:14px;}
+  .pin.bl{bottom:-5px; left:14px;}
+  .pin.br{bottom:-5px; right:14px;}
 
-        .btn {
-            display: inline-block;
-            padding: 0.6rem 1.2rem;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            text-decoration: none;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
-        }
+  .designator{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--amber);
+    letter-spacing:.1em;
+  }
+  .card h3{
+    font-family:var(--mono);
+    font-size:1.15rem;
+    font-weight:600;
+    margin:.5rem 0 .6rem;
+  }
+  .card p{
+    font-size:.92rem;
+    color:var(--text-muted);
+    margin:0 0 1.4rem;
+    min-height:3.2em;
+  }
 
-        .btn:hover {
-            background-color: var(--accent-hover);
-        }
+  .card-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:.6rem;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:.66rem;
+    letter-spacing:.08em;
+    color:var(--trace);
+    border:1px solid var(--trace-dim);
+    background:#3be08a12;
+    padding:3px 8px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
 
-        /* Estilos de la ventana Modal para previsualizar PDF */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    padding:.6rem 1rem;
+    background:var(--trace);
+    color:#06170f;
+    text-decoration:none;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:var(--sans);
+    font-size:.86rem;
+    font-weight:600;
+    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{background:#4bf29c; box-shadow:0 8px 18px -8px #3be08a80;}
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible, .close-btn:focus-visible, .icon-btn:focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
 
-        .modal-header {
-            width: 90%;
-            max-width: 1000px;
-            display: flex;
-            justify-content: flex-end;
-            padding-bottom: 10px;
-        }
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--text-muted);
+    padding:2rem 1rem 3rem;
+    border-top:1px solid var(--surface-line);
+    letter-spacing:.04em;
+  }
 
-        .close-btn {
-            color: #ffffff;
-            font-size: 2.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            line-height: 1;
-            transition: color 0.2s;
-        }
+  /* ---------- Modal / visor de PDF como instrumento ---------- */
+  .modal{
+    display:none;
+    position:fixed; inset:0;
+    background:#040810e6;
+    backdrop-filter:blur(6px);
+    z-index:1000;
+    justify-content:center;
+    align-items:center;
+    padding:min(4vh,24px) min(4vw,24px);
+  }
+  .modal.open{display:flex;}
 
-        .close-btn:hover {
-            color: #e2e8f0;
-        }
+  .instrument{
+    width:100%;
+    max-width:980px;
+    height:min(88vh,900px);
+    background:#0b1424;
+    border:1px solid var(--surface-line);
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 40px 80px -30px #000c;
+  }
+  .instrument-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:.7rem 1rem;
+    background:var(--surface);
+    border-bottom:1px solid var(--surface-line);
+    font-family:var(--mono);
+    font-size:.75rem;
+  }
+  .instrument-bar .status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text-muted);
+  }
+  .instrument-bar .rec{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--danger);
+    box-shadow:0 0 8px var(--danger);
+    animation:pulse 1.4s ease-in-out infinite;
+  }
+  .bar-actions{display:flex; align-items:center; gap:.6rem;}
+  .icon-btn{
+    background:transparent;
+    border:1px solid var(--surface-line);
+    color:var(--text-muted);
+    font-family:var(--sans);
+    font-size:.78rem;
+    padding:.35rem .7rem;
+    border-radius:6px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:.2s;
+  }
+  .icon-btn:hover{color:var(--text); border-color:var(--trace-dim);}
+  .close-btn{
+    background:transparent;
+    border:none;
+    color:var(--text-muted);
+    font-size:1.4rem;
+    line-height:1;
+    cursor:pointer;
+    padding:.1rem .4rem;
+  }
+  .close-btn:hover{color:var(--danger);}
 
-        .modal-content {
-            width: 90%;
-            max-width: 1000px;
-            height: 85vh;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+  .viewer-wrap{
+    position:relative;
+    flex:1;
+    background:#fff;
+  }
+  .viewer-wrap iframe{
+    width:100%; height:100%; border:none; display:block;
+  }
+  .loading{
+    position:absolute; inset:0;
+    background:#0b1424;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.9rem;
+    font-family:var(--mono);
+    font-size:.8rem;
+    color:var(--trace);
+    letter-spacing:.08em;
+    transition:opacity .35s ease;
+  }
+  .loading.hide{opacity:0; pointer-events:none;}
+  .bars{display:flex; gap:5px; height:22px; align-items:flex-end;}
+  .bars span{
+    width:4px;
+    background:var(--trace);
+    animation:bounce 1s ease-in-out infinite;
+  }
+  .bars span:nth-child(2){animation-delay:.12s;}
+  .bars span:nth-child(3){animation-delay:.24s;}
+  .bars span:nth-child(4){animation-delay:.36s;}
+  .bars span:nth-child(5){animation-delay:.48s;}
+  @keyframes bounce{
+    0%,100%{height:6px;}
+    50%{height:22px;}
+  }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-    </style>
+  @media (max-width:640px){
+    .instrument{height:92vh; border-radius:8px;}
+    .scope-readout{font-size:.6rem;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>Portafolio Digital</h1>
-        <p>Trabajos de Mantenimiento Eléctrico y Electrónico</p>
-    </header>
+  <div class="topbar">
+    <span><span class="dot"></span>SISTEMA · EN LÍNEA</span>
+    <span>REV. 2026.07</span>
+  </div>
 
-    <div class="container">
-        <div class="card">
-            <h3>Autonomo 1</h3>
-            <p>fallas comunes en componentes electrónicos</p>
-            <button class="btn" onclick="openModal('trabajo1.pdf')">Abrir PDF</button>
+  <header class="hero">
+    <div class="eyebrow">Mantenimiento eléctrico &amp; electrónico</div>
+    <h1>Portafolio Digital</h1>
+    <p class="sub">Registro técnico de trabajos autónomos: diagnóstico de fallas, uso de instrumentación y reparación de placas de circuito impreso.</p>
+
+    <div class="scope">
+      <div class="scope-screen">
+        <div class="scope-readout">
+          <span>CH1 <span class="amber">2V/DIV</span></span>
+          <span>TIME <span class="amber">5ms/DIV</span></span>
+          <span>TRIG · AUTO</span>
         </div>
-        
-        <div class="card">
-            <h3>Autonomo 2</h3>
-            <p>Procedimiento para el uso de multímetros y osciloscopios en diagnóstico</p>
-            <button class="btn" onclick="openModal('trabajo2.pdf')">Abrir PDF</button>
-        </div>
-        
-        <div class="card">
-            <h3>Autonomo 3</h3>
-            <p>Aspectos importantes a considerar para seleccionar componentes sustitutos</p>
-            <button class="btn" onclick="openModal('trabajo3.pdf')">Abrir PDF</button>
-        </div>
-        
-        <div class="card">
-            <h3>Autonomo 4</h3>
-            <p>Reemplazo de componentes dañados en placas electrónicas</p>
-            <button class="btn" onclick="openModal('trabajo4.pdf')">Abrir PDF</button>
-        </div>
+        <svg class="trace" viewBox="0 0 800 160" preserveAspectRatio="none" aria-hidden="true">
+          <path class="trace-line ghost" pathLength="100"
+            d="M0,80 L60,80 L80,80 L95,20 L110,140 L125,80 L200,80 L260,80 L280,80 L295,30 L310,130 L325,80 L400,80 L460,80 L480,80 L495,20 L510,140 L525,80 L600,80 L660,80 L680,80 L695,30 L710,130 L725,80 L800,80" />
+          <path class="trace-line" pathLength="100"
+            d="M0,80 L60,80 L80,80 L95,20 L110,140 L125,80 L200,80 L260,80 L280,80 L295,30 L310,130 L325,80 L400,80 L460,80 L480,80 L495,20 L510,140 L525,80 L600,80 L660,80 L680,80 L695,30 L710,130 L725,80 L800,80" />
+        </svg>
+      </div>
     </div>
+  </header>
 
-    <div id="pdfModal" class="modal">
-        <div class="modal-header">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+  <main>
+    <div class="section-label">Trabajos autónomos · 04 registrados</div>
+
+    <div class="grid" id="cardGrid">
+      <article class="card" data-file="trabajo1.pdf" data-title="Autónomo 1">
+        <span class="pin tl"></span><span class="pin tr"></span><span class="pin bl"></span><span class="pin br"></span>
+        <div class="designator">MOD-01</div>
+        <h3>Fallas comunes</h3>
+        <p>Fallas comunes en componentes electrónicos y cómo reconocerlas antes de intervenir un circuito.</p>
+        <div class="card-footer">
+          <span class="tag">PDF</span>
+          <button class="btn" onclick="openModal('trabajo1.pdf','Autónomo 1 · Fallas comunes')">Ver documento</button>
         </div>
-        <div class="modal-content">
-            <iframe id="pdfViewer" src=""></iframe>
+      </article>
+
+      <article class="card" data-file="trabajo2.pdf" data-title="Autónomo 2">
+        <span class="pin tl"></span><span class="pin tr"></span><span class="pin bl"></span><span class="pin br"></span>
+        <div class="designator">MOD-02</div>
+        <h3>Instrumentación</h3>
+        <p>Procedimiento para el uso de multímetros y osciloscopios en tareas de diagnóstico.</p>
+        <div class="card-footer">
+          <span class="tag">PDF</span>
+          <button class="btn" onclick="openModal('trabajo2.pdf','Autónomo 2 · Instrumentación')">Ver documento</button>
         </div>
+      </article>
+
+      <article class="card" data-file="trabajo3.pdf" data-title="Autónomo 3">
+        <span class="pin tl"></span><span class="pin tr"></span><span class="pin bl"></span><span class="pin br"></span>
+        <div class="designator">MOD-03</div>
+        <h3>Selección de repuestos</h3>
+        <p>Aspectos importantes a considerar para seleccionar componentes sustitutos correctos.</p>
+        <div class="card-footer">
+          <span class="tag">PDF</span>
+          <button class="btn" onclick="openModal('trabajo3.pdf','Autónomo 3 · Selección de repuestos')">Ver documento</button>
+        </div>
+      </article>
+
+      <article class="card" data-file="trabajo4.pdf" data-title="Autónomo 4">
+        <span class="pin tl"></span><span class="pin tr"></span><span class="pin bl"></span><span class="pin br"></span>
+        <div class="designator">MOD-04</div>
+        <h3>Reemplazo de componentes</h3>
+        <p>Reemplazo de componentes dañados en placas electrónicas paso a paso.</p>
+        <div class="card-footer">
+          <span class="tag">PDF</span>
+          <button class="btn" onclick="openModal('trabajo4.pdf','Autónomo 4 · Reemplazo de componentes')">Ver documento</button>
+        </div>
+      </article>
     </div>
+  </main>
 
-    <script>
-        // Función para abrir el modal y cargar el PDF
-        function openModal(pdfPath) {
-            const viewer = document.getElementById('pdfViewer');
-            const modal = document.getElementById('pdfModal');
-            
-            viewer.src = pdfPath;
-            modal.style.display = 'flex';
-        }
+  <footer>
+    PORTAFOLIO · MANTENIMIENTO ELÉCTRICO Y ELECTRÓNICO · GENERADO PARA DESPLIEGUE ESTÁTICO
+  </footer>
 
-        // Función para cerrar el modal y limpiar el iframe
-        function closeModal() {
-            const viewer = document.getElementById('pdfViewer');
-            const modal = document.getElementById('pdfModal');
-            
-            modal.style.display = 'none';
-            viewer.src = ''; 
-        }
+  <!-- ---------- Modal visor de PDF ---------- -->
+  <div id="pdfModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="instrument">
+      <div class="instrument-bar">
+        <div class="status">
+          <span class="rec"></span>
+          <span id="modalTitle">CARGANDO…</span>
+        </div>
+        <div class="bar-actions">
+          <a id="openTab" class="icon-btn" href="#" target="_blank" rel="noopener">Abrir en pestaña</a>
+          <a id="downloadPdf" class="icon-btn" href="#" download>Descargar</a>
+          <button class="close-btn" onclick="closeModal()" aria-label="Cerrar visor">&times;</button>
+        </div>
+      </div>
+      <div class="viewer-wrap">
+        <div class="loading" id="loadingState">
+          <div class="bars"><span></span><span></span><span></span><span></span><span></span></div>
+          <span>SINTONIZANDO SEÑAL…</span>
+        </div>
+        <iframe id="pdfViewer" src="" title="Visor de documento PDF"></iframe>
+      </div>
+    </div>
+  </div>
 
-        // Cerrar el modal si se hace clic fuera del PDF
-        window.onclick = function(event) {
-            const modal = document.getElementById('pdfModal');
-            if (event.target == modal) {
-                closeModal();
-            }
+  <script>
+    const modal = document.getElementById('pdfModal');
+    const viewer = document.getElementById('pdfViewer');
+    const loading = document.getElementById('loadingState');
+    const modalTitle = document.getElementById('modalTitle');
+    const openTab = document.getElementById('openTab');
+    const downloadPdf = document.getElementById('downloadPdf');
+    let lastFocused = null;
+
+    function openModal(pdfPath, title){
+      lastFocused = document.activeElement;
+      loading.classList.remove('hide');
+      modalTitle.textContent = title || 'DOCUMENTO';
+      openTab.href = pdfPath;
+      downloadPdf.href = pdfPath;
+      viewer.src = pdfPath;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.querySelector('.close-btn').focus();
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      viewer.src = '';
+      loading.classList.remove('hide');
+      if(lastFocused) lastFocused.focus();
+    }
+
+    viewer.addEventListener('load', () => {
+      if(viewer.src) loading.classList.add('hide');
+    });
+
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    // Revelado de tarjetas al hacer scroll
+    const cards = document.querySelectorAll('.card');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if(entry.isIntersecting){
+          setTimeout(() => entry.target.classList.add('in-view'), i * 60);
+          io.unobserve(entry.target);
         }
-    </script>
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(c => io.observe(c));
+  </script>
 </body>
 </html>
