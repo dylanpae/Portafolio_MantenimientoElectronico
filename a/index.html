@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Mantenimiento Eléctrico y Electrónico</title>
+    <style>
+        /* Estilos Minimalistas */
+        :root {
+            --bg-color: #f7f9fc;
+            --text-color: #2d3748;
+            --text-muted: #718096;
+            --card-bg: #ffffff;
+            --accent-color: #3182ce;
+            --accent-hover: #2b6cb0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Estilos de la ventana Modal para previsualizar PDF */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            color: #ffffff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #e2e8f0;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 1000px;
+            height: 85vh;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Portafolio Digital</h1>
+        <p>Trabajos de Mantenimiento Eléctrico y Electrónico</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3>Autonomo 1</h3>
+            <p>fallas comunes en componentes electrónicos</p>
+            <button class="btn" onclick="openModal('trabajo1.pdf')">Abrir PDF</button>
+        </div>
+        
+        <div class="card">
+            <h3>Autonomo 2</h3>
+            <p>Procedimiento para el uso de multímetros y osciloscopios en diagnóstico</p>
+            <button class="btn" onclick="openModal('trabajo2.pdf')">Abrir PDF</button>
+        </div>
+        
+        <div class="card">
+            <h3>Autonomo 3</h3>
+            <p>Aspectos importantes a considerar para seleccionar componentes sustitutos</p>
+            <button class="btn" onclick="openModal('trabajo3.pdf')">Abrir PDF</button>
+        </div>
+        
+        <div class="card">
+            <h3>Autonomo 4</h3>
+            <p>Reemplazo de componentes dañados en placas electrónicas</p>
+            <button class="btn" onclick="openModal('trabajo4.pdf')">Abrir PDF</button>
+        </div>
+    </div>
+
+    <div id="pdfModal" class="modal">
+        <div class="modal-header">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-content">
+            <iframe id="pdfViewer" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir el modal y cargar el PDF
+        function openModal(pdfPath) {
+            const viewer = document.getElementById('pdfViewer');
+            const modal = document.getElementById('pdfModal');
+            
+            viewer.src = pdfPath;
+            modal.style.display = 'flex';
+        }
+
+        // Función para cerrar el modal y limpiar el iframe
+        function closeModal() {
+            const viewer = document.getElementById('pdfViewer');
+            const modal = document.getElementById('pdfModal');
+            
+            modal.style.display = 'none';
+            viewer.src = ''; 
+        }
+
+        // Cerrar el modal si se hace clic fuera del PDF
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
